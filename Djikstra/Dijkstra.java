@@ -96,14 +96,16 @@ public class Dijkstra {
 
 		// Initialize dist_ and prev_ for every vertex
 		for (Vertex v : graph_.vertices()){
-			dist_.put(v, Double.MAX_VALUE); // use max value to store infinity
+			// add source vertex
+			if (v.equals(s)) {
+				dist_.put(v, 0.0);
+			}
+			else {
+				dist_.put(v, Double.MAX_VALUE); // use max value to store infinity
+			}
 			prev_.put(v, null);
-
 			pq_.add(v);
 		}
-
-		// Set distance of source vertex
-		dist_.put(s, 0.0);
 		
 	}
 
@@ -123,7 +125,44 @@ public class Dijkstra {
 	 *          finish vertex; if null, compute the shortest path to all vertices
 	 */
 	public void run ( Vertex f ) {
-		throw new UnsupportedOperationException("not yet implemented!");
+
+		// Repeat until PQ is empty
+		while (!pq_.isEmpty()) {
+
+			// Extract the minimum vertex from the PQ
+			Vertex current = pq_.poll();
+
+			// If f is extracted, return 
+			if (f != null && current.equals(f)) {
+				return;
+			}
+
+			// Each edge incident to the vertex, get the neighbors
+			Iterable<Edge> edges = graph_.incidentEdges(current);
+
+			// For each neighbor
+			for (Edge edge : edges){
+				// get its neighbor
+				Vertex neighbor = graph_.opposite(current, edge);
+
+				// compute new distance
+				double new_dist = w_.weight(edge) + dist_.get(current);
+			
+				// if new distance to that neighbor is smaller than its current value
+				// update it
+				if (new_dist < dist_.get(neighbor)){
+					dist_.put(neighbor, new_dist);
+					prev_.put(neighbor, edge);
+
+					// Reorder the PQ
+					decreaseKey(neighbor);
+				}
+			
+
+			}
+
+		}
+
 	}
 
 	/**
@@ -159,7 +198,16 @@ public class Dijkstra {
 	 * @return the length of the shortest path from vertex s to vertex f
 	 */
 	public double getDist ( Vertex f ) {
-		throw new UnsupportedOperationException("not yet implemented!");
+		return dist_.get(f);
+	}
+
+	/**
+	* Decreasing key helper function 
+	* @param v : vertex to decrease key on.
+	*/
+	private void decreaseKey(Vertex v) {
+		pq_.remove(v);
+		pq_.add(v);
 	}
 
 }
