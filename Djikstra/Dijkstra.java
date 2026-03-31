@@ -1,11 +1,13 @@
 import java.util.Comparator;
-
-import adjencyListGraph.Edge;
-import adjencyListGraph.Graph;
-import adjencyListGraph.Vertex;
-
 import java.util.HashMap;
 import java.util.PriorityQueue;
+
+import adjacencyListGraph.Edge;
+import adjacencyListGraph.Graph;
+import adjacencyListGraph.Vertex;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Dijkstra's algorithm.
@@ -91,6 +93,10 @@ public class Dijkstra {
 	 */
 
 	public void init ( Vertex s ) {
+		// initializing hashmaps
+		dist_ = new HashMap<>();
+		prev_ = new HashMap<>();
+
 		// Create a PriorityQueue and store all vertices in there
 		pq_ = new PriorityQueue<>(new VertComparator());
 
@@ -157,8 +163,6 @@ public class Dijkstra {
 					// Reorder the PQ
 					decreaseKey(neighbor);
 				}
-			
-
 			}
 
 		}
@@ -174,7 +178,34 @@ public class Dijkstra {
 	 * @return the vertices on the shortest path from vertex s to vertex f
 	 */
 	public Iterable<Vertex> getPathVertices ( Vertex f ) {
-		throw new UnsupportedOperationException("not yet implemented!");
+
+		// Creating collection to store the vertices
+		ArrayList<Vertex> vertices = new ArrayList<>();
+
+		vertices.add(f);
+
+		// walk backward from f to sourse vertex
+		Vertex current = f;
+
+		// repeat until reaching source vertex s | pre_ holds null value for distance.
+		while (prev_.get(current) != null) {
+
+			// Each vertex, get the edge then get the oppposite neighbor, then add it to the collection
+			Edge edge = prev_.get(current);
+
+			Vertex neighbor = graph_.opposite(current, edge);
+
+			vertices.add(neighbor);
+
+			current = neighbor;
+
+		}
+
+		// reverse the collections in place
+		Collections.reverse(vertices);
+
+		return vertices;
+
 	}
 
 	/**
@@ -186,7 +217,29 @@ public class Dijkstra {
 	 * @return the edges on the shortest path from vertex s to vertex f
 	 */
 	public Iterable<Edge> getPathEdges ( Vertex f ) {
-		throw new UnsupportedOperationException("not yet implemented!");
+		// a collection to store edges
+		ArrayList<Edge> edges = new ArrayList<>();
+
+		Vertex current = f;
+
+		while (prev_.get(current) != null) {
+			// get the edge connecting to the vertex
+			Edge edge = prev_.get(current);
+
+			// get the neighbor
+			Vertex neighbor = graph_.opposite(current, edge);
+
+			// add edge to collection
+			edges.add(edge);
+
+			// update current vertex
+			current = neighbor;
+		}
+
+		// reverse the collection in place
+		Collections.reverse(edges);
+
+		return edges;
 	}
 
 	/**

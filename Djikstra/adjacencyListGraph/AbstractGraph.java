@@ -2,7 +2,7 @@
 * Author : Andy Dinh 
 */
 
-package adjencyListGraph;
+package adjacencyListGraph;
 
 import java.util.ArrayList;
 

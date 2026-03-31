@@ -1,4 +1,4 @@
-package adjencyListGraph;
+package adjacencyListGraph;
 
 /**
  * A vertex in the graph.

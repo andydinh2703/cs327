@@ -1,4 +1,4 @@
-package adjencyListGraph;
+package adjacencyListGraph;
 
 /**
  * An edge in the graph.

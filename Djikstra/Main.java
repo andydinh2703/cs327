@@ -1,7 +1,7 @@
-import adjencyListGraph.AdjacencyListGraph;
-import adjencyListGraph.Graph;
-import adjencyListGraph.Vertex;
-import adjencyListGraph.Edge;
+import adjacencyListGraph.AdjacencyListGraph;
+import adjacencyListGraph.Edge;
+import adjacencyListGraph.Graph;
+import adjacencyListGraph.Vertex;
 
 public class Main {
 
