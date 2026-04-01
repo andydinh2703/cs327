@@ -179,6 +179,11 @@ public class Dijkstra {
 	 */
 	public Iterable<Vertex> getPathVertices ( Vertex f ) {
 
+		// check if f is null or exist in the graph
+		if (f == null || dist_.get(f) == null) {
+			throw new IllegalArgumentException("f vertex is null or isn't in the graph");
+		}
+
 		// Creating collection to store the vertices
 		ArrayList<Vertex> vertices = new ArrayList<>();
 
@@ -217,6 +222,11 @@ public class Dijkstra {
 	 * @return the edges on the shortest path from vertex s to vertex f
 	 */
 	public Iterable<Edge> getPathEdges ( Vertex f ) {
+		// check if f is null or exist in the graph
+		if (f == null || dist_.get(f) == null) {
+			throw new IllegalArgumentException("f vertex is null or isn't in the graph");
+		}
+
 		// a collection to store edges
 		ArrayList<Edge> edges = new ArrayList<>();
 
@@ -251,7 +261,12 @@ public class Dijkstra {
 	 * @return the length of the shortest path from vertex s to vertex f
 	 */
 	public double getDist ( Vertex f ) {
-		return dist_.get(f);
+		// check if f is null or exist in the graph
+		if (f == null || dist_.get(f) == null) {
+			throw new IllegalArgumentException("f vertex is null or isn't in the graph");
+		}
+		
+			return dist_.get(f);
 	}
 
 	/**
